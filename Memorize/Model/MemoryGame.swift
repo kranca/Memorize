@@ -11,7 +11,14 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: [Card]
     private(set) var score: Int = 0
     
-    private var indexOfSingleOpenCard: Int?
+    private var indexOfSingleOpenCard: Int? {
+        // if only one index of face up card is found return index
+        get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
+        
+        // when setting: close all cards except the one just set
+        // newValue is value just set
+        set { cards.indices.forEach({ cards[$0].isFaceUp = ($0 == newValue) }) }
+    }
     
     mutating func choose(_ card: Card) {
         // if chosen card is in deck, chosen card is facing down and chosen card hasn't been matched
@@ -37,19 +44,15 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 // set both cards as seen
                 cards[chosenIndex].hasBeenSeen = true
                 cards[potentialMatchIndex].hasBeenSeen = true
-                // return to start condition
-                indexOfSingleOpenCard = nil
+                
+                // reopen chosen card, since all cards have been closed
+                cards[chosenIndex].isFaceUp = true
+                
             // if no other card is open
             } else {
-                // close all cards
-                for index in cards.indices {
-                    cards[index].isFaceUp = false
-                }
                 // game starts with indexOfSingleOpenCard = nil, therefore everytime one card is open, indexOfSingleOpenCard is asigned to chosenIndex
                 indexOfSingleOpenCard = chosenIndex
             }
-            // reopen chosen card, since all cards have been closed
-            cards[chosenIndex].isFaceUp.toggle()
         }
     }
     
@@ -70,5 +73,15 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var isMatched = false
         let content: CardContent
         var hasBeenSeen = false
+    }
+}
+
+extension Array {
+    var oneAndOnly: Element? {
+        if self.count == 1 {
+            return self.first
+        } else {
+            return nil
+        }
     }
 }
