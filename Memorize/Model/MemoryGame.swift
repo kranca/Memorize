@@ -9,6 +9,7 @@ import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: [Card]
+    private(set) var score: Int = 0
     
     private var indexOfSingleOpenCard: Int?
     
@@ -25,7 +26,17 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     // both cards are matched
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
+                    // and 2 points are given
+                    score += 2
                 }
+                // if one of the cards has been seen and not matched
+                if (cards[chosenIndex].hasBeenSeen || cards[potentialMatchIndex].hasBeenSeen) && (!cards[chosenIndex].isMatched || !cards[potentialMatchIndex].isMatched) {
+                    // deduct 1 point
+                    score -= 1
+                }
+                // set both cards as seen
+                cards[chosenIndex].hasBeenSeen = true
+                cards[potentialMatchIndex].hasBeenSeen = true
                 // return to start condition
                 indexOfSingleOpenCard = nil
             // if no other card is open
@@ -54,10 +65,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     struct Card: Identifiable {
-        var id = UUID()
+        let id = UUID()
         var isFaceUp = false
         var isMatched = false
-        var content: CardContent
-        
+        let content: CardContent
+        var hasBeenSeen = false
     }
 }
