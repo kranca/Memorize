@@ -15,6 +15,7 @@ class EmojiMemoryGame: ObservableObject {
     private static let girls = ["👮‍♀️", "👷‍♀️", "💂‍♀️", "🕵️‍♀️", "👩‍⚕️", "👩‍🌾", "👩‍🍳", "👩‍🎓", "👩‍🎤", "👩‍🏫", "👩‍🏭", "👩‍💻", "👩‍💼", "👩‍🔧", "👩‍🔬"].shuffled()
     private static let boys = ["👮‍♂️", "👷‍♂️", "💂‍♂️", "🕵️‍♂️", "👨‍⚕️", "👨‍🌾", "👨‍🍳", "👨‍🎓", "👨‍🎤", "👨‍🏫", "👨‍🏭", "👨‍💻", "👨‍💼", "👨‍🔧", "👨‍🔬"].shuffled()
     private static let animals = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐒", "🦆", "🦅", "🦉"].shuffled()
+    private static let flags = ["🇩🇪", "🇩🇿", "🇦🇷", "🇦🇺", "🇦🇹", "🇧🇭", "🇧🇪", "🇧🇷", "🇨🇦", "🇨🇿", "🇨🇱", "🇨🇳", "🇨🇴", "🇰🇷", "🇨🇷", "🇭🇷", "🇨🇺", "🇩🇰", "🇪🇨", "🇪🇬", "🇦🇪" ,"🇪🇸" ,"🇺🇸" ,"🇫🇮", "🇫🇷", "🇬🇷", "🇮🇳", "🇮🇷", "🇮🇪", "🇮🇱", "🇮🇹", "🇯🇲", "🇯🇵", "🇱🇧", "🇲🇾", "🇲🇽", "🇳🇬", "🇳🇴", "🇳🇿", "🇳🇱", "🇵🇹", "🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🇸🇬", "🇿🇦", "🇸🇪", "🇨🇭", "🇹🇭", "🇹🇳", "🇹🇷", "🇺🇦", "🇺🇾", "🇻🇪"]
     
     private(set) static var vehiclesTheme = Theme(name: .vehicles, content: vehicles, cardPairs: 8)
     private(set) static var fruitsTheme = Theme(name: .fruits, content: fruits, cardPairs: 20)
@@ -22,8 +23,9 @@ class EmojiMemoryGame: ObservableObject {
     private(set) static var girlsTheme = Theme(name: .girls, content: girls, cardPairs: 8)
     private(set) static var boysTheme = Theme(name: .boys, content: boys, cardPairs: 8)
     private(set) static var animalsTheme = Theme(name: .animals, content: animals, cardPairs: 10)
+    private(set) static var flagsTheme = Theme(name: .flags, content: flags, cardPairs: 15)
     
-    private(set) static var themes = [vehiclesTheme, fruitsTheme, sportsTheme, girlsTheme, boysTheme, animalsTheme]
+    private(set) static var themes = [vehiclesTheme, fruitsTheme, sportsTheme, girlsTheme, boysTheme, animalsTheme, flagsTheme]
     
     
     private static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
@@ -52,6 +54,7 @@ class EmojiMemoryGame: ObservableObject {
         case girls = "Girls"
         case boys = "Boys"
         case animals = "Animals"
+        case flags = "Flags"
     }
     
     struct Theme {
@@ -82,6 +85,14 @@ class EmojiMemoryGame: ObservableObject {
         model.choose(card)
     }
     
+    func shuffle() {
+        model.shuffle()
+    }
+    
+    func restart() {
+        model = EmojiMemoryGame.createMemoryGame(theme: theme)
+    }
+    
     // MARK: - Additional Methods
     // method intended for themes overview
     func extractEmojis() -> String {
@@ -108,6 +119,8 @@ class EmojiMemoryGame: ObservableObject {
             return .blue
         case .animals:
             return .yellow
+        case .flags:
+            return .purple
         }
     }
     

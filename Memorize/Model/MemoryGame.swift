@@ -67,14 +67,72 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         cards = cards.shuffled()
     }
     
+    mutating func shuffle() {
+        cards.shuffle()
+    }
+    
     struct Card: Identifiable {
         let id = UUID()
-        var isFaceUp = false
+        var isFaceUp = false {
+            didSet {
+                if isFaceUp {
+                    startsUsingBonusTime()
+                } else {
+                    stopsUsingBonusTime()
+                }
+            }
+        }
         var isMatched = false
         let content: CardContent
         var hasBeenSeen = false
+        
+        // MARK: - Bonus time
+
+        // bonus time logic works with TimeIntervals and Date
+        var bonusTimeLimit: TimeInterval = 6
+
+        private var faceUpTime: TimeInterval {
+            if let lastFaceUpDate = self.lastFaceUpDate {
+                return pastFaceUpTime + Date().timeIntervalSince(lastFaceUpDate)
+            } else {
+                return pastFaceUpTime
+            }
+        }
+        
+        var lastFaceUpDate: Date?
+        
+        var pastFaceUpTime: TimeInterval = 0
+        
+        var bonusTimeRemaining: TimeInterval {
+            max(0, bonusTimeLimit - faceUpTime)
+        }
+        
+        var bonusRemaining: Double {
+            (bonusTimeLimit > 0 && bonusTimeRemaining > 0) ? bonusTimeRemaining/bonusTimeLimit : 0
+        }
+        
+        var hasEarnedBonus: Bool {
+            isMatched && bonusTimeRemaining > 0
+        }
+        
+        var isConsumingBonusTime: Bool {
+            isFaceUp && !isMatched && bonusTimeRemaining > 0
+        }
+        
+        private mutating func startsUsingBonusTime() {
+            if isConsumingBonusTime, lastFaceUpDate == nil {
+                lastFaceUpDate = Date()
+            }
+        }
+        
+        private mutating func stopsUsingBonusTime() {
+            pastFaceUpTime = faceUpTime
+            self.lastFaceUpDate = nil
+        }
     }
 }
+
+// MARK: - Extensions
 
 extension Array {
     var oneAndOnly: Element? {
@@ -85,3 +143,5 @@ extension Array {
         }
     }
 }
+
+
