@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ThemeChooser: View {
     @EnvironmentObject var store: ThemeStore
-    let vehicleGame = EmojiMemoryGame(theme: EmojiMemoryGame.vehiclesTheme)
     
     @State private var editMode: EditMode = .inactive
     @State private var editing = false
@@ -18,7 +17,8 @@ struct ThemeChooser: View {
         NavigationView {
             List {
                 ForEach(store.themes) { theme in
-                    NavigationLink(destination: EmojiMemoryGameView(game: vehicleGame), label: {
+                    let game = store.themes[theme].emojis.count > 1 ? EmojiMemoryGame(theme: theme) : nil
+                    NavigationLink(destination: store.themes[theme].emojis.count > 1 ? EmojiMemoryGameView(game: game!) : nil, label: {
                         VStack(alignment: .leading) {
                             HStack {
                                 VStack(alignment: .leading) {

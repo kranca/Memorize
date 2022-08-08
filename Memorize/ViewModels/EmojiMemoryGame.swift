@@ -9,28 +9,19 @@ import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
     typealias Card = MemoryGame<String>.Card
-    private static let vehicles = ["🚗", "🚑", "✈️", "🚀", "🚌", "🚓", "🚁", "⛵️", "🚤", "🚂", "🚝", "🏎"].shuffled()
-    private static let fruits = ["🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍒", "🍑", "🥭", "🍍"].shuffled()
-    private static let sports = ["⛷", "🏂", "🪂", "🏋️‍♀️", "🤼‍♀️", "🤸‍♀️", "⛹️‍♀️", "🤾‍♂️", "🤺", "🏌️‍♂️", "🏄‍♀️", "🏊‍♂️", "🤽‍♀️", "🚣‍♂️", "🧗‍♂️", "🚵‍♂️"].shuffled()
-    private static let girls = ["👮‍♀️", "👷‍♀️", "💂‍♀️", "🕵️‍♀️", "👩‍⚕️", "👩‍🌾", "👩‍🍳", "👩‍🎓", "👩‍🎤", "👩‍🏫", "👩‍🏭", "👩‍💻", "👩‍💼", "👩‍🔧", "👩‍🔬"].shuffled()
-    private static let boys = ["👮‍♂️", "👷‍♂️", "💂‍♂️", "🕵️‍♂️", "👨‍⚕️", "👨‍🌾", "👨‍🍳", "👨‍🎓", "👨‍🎤", "👨‍🏫", "👨‍🏭", "👨‍💻", "👨‍💼", "👨‍🔧", "👨‍🔬"].shuffled()
-    private static let animals = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐒", "🦆", "🦅", "🦉"].shuffled()
-    private static let flags = ["🇩🇪", "🇩🇿", "🇦🇷", "🇦🇺", "🇦🇹", "🇧🇭", "🇧🇪", "🇧🇷", "🇨🇦", "🇨🇿", "🇨🇱", "🇨🇳", "🇨🇴", "🇰🇷", "🇨🇷", "🇭🇷", "🇨🇺", "🇩🇰", "🇪🇨", "🇪🇬", "🇦🇪" ,"🇪🇸" ,"🇺🇸" ,"🇫🇮", "🇫🇷", "🇬🇷", "🇮🇳", "🇮🇷", "🇮🇪", "🇮🇱", "🇮🇹", "🇯🇲", "🇯🇵", "🇱🇧", "🇲🇾", "🇲🇽", "🇳🇬", "🇳🇴", "🇳🇿", "🇳🇱", "🇵🇹", "🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🇸🇬", "🇿🇦", "🇸🇪", "🇨🇭", "🇹🇭", "🇹🇳", "🇹🇷", "🇺🇦", "🇺🇾", "🇻🇪"]
-    
-    private(set) static var vehiclesTheme = Theme(name: .vehicles, content: vehicles, cardPairs: 8)
-    private(set) static var fruitsTheme = Theme(name: .fruits, content: fruits, cardPairs: 20)
-    private(set) static var sportsTheme = Theme(name: .sports, content: sports, cardPairs: 7)
-    private(set) static var girlsTheme = Theme(name: .girls, content: girls, cardPairs: 8)
-    private(set) static var boysTheme = Theme(name: .boys, content: boys, cardPairs: 8)
-    private(set) static var animalsTheme = Theme(name: .animals, content: animals, cardPairs: 10)
-    private(set) static var flagsTheme = Theme(name: .flags, content: flags, cardPairs: 15)
-    
-    private(set) static var themes = [vehiclesTheme, fruitsTheme, sportsTheme, girlsTheme, boysTheme, animalsTheme, flagsTheme]
+//    private static let vehicles = ["🚗", "🚑", "✈️", "🚀", "🚌", "🚓", "🚁", "⛵️", "🚤", "🚂", "🚝", "🏎"].shuffled()
+//    private static let fruits = ["🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍒", "🍑", "🥭", "🍍"].shuffled()
+//    private static let sports = ["⛷", "🏂", "🪂", "🏋️‍♀️", "🤼‍♀️", "🤸‍♀️", "⛹️‍♀️", "🤾‍♂️", "🤺", "🏌️‍♂️", "🏄‍♀️", "🏊‍♂️", "🤽‍♀️", "🚣‍♂️", "🧗‍♂️", "🚵‍♂️"].shuffled()
+//    private static let girls = ["👮‍♀️", "👷‍♀️", "💂‍♀️", "🕵️‍♀️", "👩‍⚕️", "👩‍🌾", "👩‍🍳", "👩‍🎓", "👩‍🎤", "👩‍🏫", "👩‍🏭", "👩‍💻", "👩‍💼", "👩‍🔧", "👩‍🔬"].shuffled()
+//    private static let boys = ["👮‍♂️", "👷‍♂️", "💂‍♂️", "🕵️‍♂️", "👨‍⚕️", "👨‍🌾", "👨‍🍳", "👨‍🎓", "👨‍🎤", "👨‍🏫", "👨‍🏭", "👨‍💻", "👨‍💼", "👨‍🔧", "👨‍🔬"].shuffled()
+//    private static let animals = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐒", "🦆", "🦅", "🦉"].shuffled()
+//    private static let flags = ["🇩🇪", "🇩🇿", "🇦🇷", "🇦🇺", "🇦🇹", "🇧🇭", "🇧🇪", "🇧🇷", "🇨🇦", "🇨🇿", "🇨🇱", "🇨🇳", "🇨🇴", "🇰🇷", "🇨🇷", "🇭🇷", "🇨🇺", "🇩🇰", "🇪🇨", "🇪🇬", "🇦🇪" ,"🇪🇸" ,"🇺🇸" ,"🇫🇮", "🇫🇷", "🇬🇷", "🇮🇳", "🇮🇷", "🇮🇪", "🇮🇱", "🇮🇹", "🇯🇲", "🇯🇵", "🇱🇧", "🇲🇾", "🇲🇽", "🇳🇬", "🇳🇴", "🇳🇿", "🇳🇱", "🇵🇹", "🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🇸🇬", "🇿🇦", "🇸🇪", "🇨🇭", "🇹🇭", "🇹🇳", "🇹🇷", "🇺🇦", "🇺🇾", "🇻🇪"]
     
     
     private static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
-        MemoryGame(pairsOfCards: theme.cardPairs) { index in
-            theme.content[index]
+        let gameEmojis = theme.emojisArray
+        return MemoryGame(pairsOfCards: theme.cardPairs) { index in
+            gameEmojis[index]
         }
     }
     
@@ -41,42 +32,14 @@ class EmojiMemoryGame: ObservableObject {
     
     @Published private var theme: Theme
     
+    var name: String {
+        theme.name
+    }
+    
     @Published private var model: MemoryGame<String>
     
     var cards: Array<Card> {
         return model.cards
-    }
-    
-    enum ThemeName: String {
-        case vehicles = "Vehicles"
-        case fruits = "Fruits"
-        case sports = "Sports"
-        case girls = "Girls"
-        case boys = "Boys"
-        case animals = "Animals"
-        case flags = "Flags"
-    }
-    
-    struct Theme {
-        var name: ThemeName
-        var content: [String]
-        var cardPairs: Int
-        
-        init(name: ThemeName, content: [String], cardPairs: Int) {
-            self.name = name
-            self.content = content
-            if cardPairs <= content.count {
-                self.cardPairs = cardPairs
-            } else {
-                self.cardPairs = content.count
-            }
-        }
-        
-        init(name: ThemeName, content: [String]) {
-            self.name = name
-            self.content = content
-            self.cardPairs = content.count
-        }
     }
     
     // MARK: - Intents
@@ -94,49 +57,19 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     // MARK: - Additional Methods
-    // method intended for themes overview
-    func extractEmojis() -> String {
-        var emojis = ""
-        
-        for index in 0..<theme.cardPairs {
-            emojis += theme.content[index]
-        }
-        return emojis
-    }
-    
-    // additional method for color selection
-    func selectColor() -> Color {
-        switch theme.name {
-        case .vehicles:
-            return .red
-        case .fruits:
-            return .green
-        case .sports:
-            return .orange
-        case .girls:
-            return .pink
-        case .boys:
-            return .blue
-        case .animals:
-            return .yellow
-        case .flags:
-            return .purple
-        }
-    }
-    
-    // computed property for theme name
-    var name: String {
-        theme.name.rawValue
-    }
-    
+
     // additional method for creating a new game
     func startNewGame() {
-        theme = EmojiMemoryGame.themes.randomElement()!
+        //theme = EmojiMemoryGame.themes.randomElement()!
         model = EmojiMemoryGame.createMemoryGame(theme: theme)
     }
     
     // additional method to get score
     func getScore() -> Int {
         model.score
+    }
+    
+    func getThemeColor() -> Color {
+        theme.color
     }
 }

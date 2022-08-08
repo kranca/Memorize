@@ -96,7 +96,7 @@ struct ThemeEditor: View {
             }
             
         }, label: {
-            Text("Add Theme")
+            Text("Close")
         })
         .alert(isPresented: $insufficientEmojisAlert) {
             Alert(title: Text("Insufficient Emojis to play!"), message: Text("Please add at least 2 Emojis"), dismissButton: .cancel())

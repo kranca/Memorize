@@ -73,7 +73,8 @@ struct EmojiMemoryGameView: View {
                 }
             })
             .padding(.horizontal)
-            .foregroundColor(game.selectColor())
+            //.foregroundColor(game.selectColor())
+            .foregroundColor(game.getThemeColor())
         }
     }
     
@@ -87,7 +88,7 @@ struct EmojiMemoryGameView: View {
             }
         }
         .frame(width: DrawingConstants.undealtWidth, height: DrawingConstants.undealtHeight)
-        .foregroundColor(game.selectColor())
+        .foregroundColor(game.getThemeColor())
         .onTapGesture {
             // deal cards animation
             for card in game.cards {
@@ -140,9 +141,9 @@ struct EmojiMemoryGameView: View {
     }
 }
 
-struct EmojiMemoryGameView_Previews: PreviewProvider {
-    static var previews: some View {
-        let game = EmojiMemoryGame(theme: EmojiMemoryGame.vehiclesTheme)
-        EmojiMemoryGameView(game: game)
-    }
-}
+//struct EmojiMemoryGameView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let game = EmojiMemoryGame(theme: EmojiMemoryGame.vehiclesTheme)
+//        EmojiMemoryGameView(game: game)
+//    }
+//}

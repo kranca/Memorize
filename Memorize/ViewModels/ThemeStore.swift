@@ -20,6 +20,14 @@ struct Theme: Identifiable, Codable, Hashable {
         set { rgbaColor = RGBAColor(color: newValue) }
     }
     
+    var emojisArray: [String] {
+        var arrayOfEmojis = [String]()
+        for emoji in emojis {
+            arrayOfEmojis.append(String(emoji))
+        }
+        return arrayOfEmojis.shuffled()
+    }
+    
     var canBePlayed: Bool {
         emojis.count > 1
     }
