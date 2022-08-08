@@ -20,6 +20,10 @@ struct Theme: Identifiable, Codable, Hashable {
         set { rgbaColor = RGBAColor(color: newValue) }
     }
     
+    var canBePlayed: Bool {
+        emojis.count > 1
+    }
+    
     fileprivate init(name: String, rgbaColor: RGBAColor, emojis: String, cardPairs: Int, id: Int) {
         self.name = name
         self.rgbaColor = rgbaColor
@@ -65,7 +69,7 @@ class ThemeStore: ObservableObject {
         restoreFromUserDefaults()
         
         if themes.isEmpty {
-            insertTheme(named: "Vehicles", color: .red, emojis: "🚗🚑✈️🚀🚌🚓🚁⛵️🚤🚂🚝🏎", cardPairs: 8)
+            insertTheme(named: "Vehicles", color: .black, emojis: "🚗🚑✈️🚀🚌🚓🚁⛵️🚤🚂🚝🏎", cardPairs: 6)
             insertTheme(named: "Sports", color: .orange, emojis: "⛷🏂🪂🏋️‍♀️🤼‍♀️🤸‍♀️⛹️‍♀️🤾‍♂️🤺🏌️‍♂️🏄‍♀️🏊‍♂️🤽‍♀️🚣‍♂️🧗‍♂️🚵‍♂️", cardPairs: 7)
             insertTheme(named: "Boys", color: .blue, emojis: "👮‍♂️👷‍♂️💂‍♂️🕵️‍♂️👨‍⚕️👨‍🌾👨‍🍳👨‍🎓👨‍🎤👨‍🏫👨‍🏭👨‍💻👨‍💼👨‍🔧👨‍🔬", cardPairs: 8)
             insertTheme(named: "Girls", color: .pink, emojis: "👮‍♀️👷‍♀️💂‍♀️🕵️‍♀️👩‍⚕️👩‍🌾👩‍🍳👩‍🎓👩‍🎤👩‍🏫👩‍🏭👩‍💻👩‍💼👩‍🔧👩‍🔬", cardPairs: 8)

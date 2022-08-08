@@ -10,7 +10,7 @@
 		C4190109289E51DA00630C28 /* ThemeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4190108289E51DA00630C28 /* ThemeStore.swift */; };
 		C419010C289E63E300630C28 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419010B289E63E300630C28 /* Extensions.swift */; };
 		C419010E289E789300630C28 /* ThemeChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419010D289E789300630C28 /* ThemeChooser.swift */; };
-		C4190110289FBDB400630C28 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419010F289FBDB400630C28 /* ThemeManager.swift */; };
+		C4190110289FBDB400630C28 /* ThemeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C419010F289FBDB400630C28 /* ThemeEditor.swift */; };
 		C44D757827D765C5002A2DF5 /* AspectRatioVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44D757727D765C5002A2DF5 /* AspectRatioVGrid.swift */; };
 		C44D757B27D88854002A2DF5 /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44D757A27D88854002A2DF5 /* Pie.swift */; };
 		C44D757E27D8AE2C002A2DF5 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44D757D27D8AE2C002A2DF5 /* Cardify.swift */; };
@@ -28,7 +28,7 @@
 		C4190108289E51DA00630C28 /* ThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStore.swift; sourceTree = "<group>"; };
 		C419010B289E63E300630C28 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C419010D289E789300630C28 /* ThemeChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeChooser.swift; sourceTree = "<group>"; };
-		C419010F289FBDB400630C28 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		C419010F289FBDB400630C28 /* ThemeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditor.swift; sourceTree = "<group>"; };
 		C44D757727D765C5002A2DF5 /* AspectRatioVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectRatioVGrid.swift; sourceTree = "<group>"; };
 		C44D757A27D88854002A2DF5 /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
 		C44D757D27D8AE2C002A2DF5 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				C419010D289E789300630C28 /* ThemeChooser.swift */,
-				C419010F289FBDB400630C28 /* ThemeManager.swift */,
+				C419010F289FBDB400630C28 /* ThemeEditor.swift */,
 			);
 			path = ThemeSelectionViews;
 			sourceTree = "<group>";
@@ -217,7 +217,7 @@
 				C44D757E27D8AE2C002A2DF5 /* Cardify.swift in Sources */,
 				C44D757827D765C5002A2DF5 /* AspectRatioVGrid.swift in Sources */,
 				C44E3ED527CE6868005D3C4A /* EmojiMemoryGameView.swift in Sources */,
-				C4190110289FBDB400630C28 /* ThemeManager.swift in Sources */,
+				C4190110289FBDB400630C28 /* ThemeEditor.swift in Sources */,
 				C44D757B27D88854002A2DF5 /* Pie.swift in Sources */,
 				C419010E289E789300630C28 /* ThemeChooser.swift in Sources */,
 				C44E3ED327CE6868005D3C4A /* MemorizeApp.swift in Sources */,

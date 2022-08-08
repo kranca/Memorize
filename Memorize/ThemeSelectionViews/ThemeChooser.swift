@@ -12,7 +12,6 @@ struct ThemeChooser: View {
     let vehicleGame = EmojiMemoryGame(theme: EmojiMemoryGame.vehiclesTheme)
     
     @State private var editMode: EditMode = .inactive
-    @State private var name = "Raul"
     @State private var editing = false
     
     var body: some View {
@@ -20,11 +19,21 @@ struct ThemeChooser: View {
             List {
                 ForEach(store.themes) { theme in
                     NavigationLink(destination: EmojiMemoryGameView(game: vehicleGame), label: {
-                        VStack {
-                            Text(theme.name)
+                        VStack(alignment: .leading) {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(theme.name)
+                                    Text("Pairs: \(theme.cardPairs)")
+                                }
+                                RoundedRectangle(cornerRadius: 5)
+                                    .size(width: 30, height: 45)
+                                    .fill()
+                                    .foregroundColor(Color(rgbaColor: theme.rgbaColor))
+                                    //.aspectRatio(2/3, contentMode: .fill)
+                            }
                             Text(theme.emojis)
                         }
-                        .gesture(editMode == .active ? tap : nil)
+                        .gesture(editMode == .active ? tap(on: store.themes.firstIndex(of: theme) ?? 0) : nil)
                     })
                 }
                 .onDelete(perform: { indexSet in
@@ -34,18 +43,33 @@ struct ThemeChooser: View {
                     store.themes.move(fromOffsets: indexSet, toOffset: newOffset)
                 })
             }
+            .navigationTitle("Choose a theme!")
             .toolbar {
-                EditButton()
+                ToolbarItem(placement: .navigationBarLeading) { editMode == .active ? newThemeButton : nil }
+                ToolbarItem { EditButton() }
             }
             .sheet(isPresented: $editing) {
-                ThemeManager()
+                ThemeEditor(theme: $store.themes[chosenThemeIndex])
             }
             .environment(\.editMode, $editMode)
         }
     }
     
-    var tap: some Gesture {
-        TapGesture().onEnded { editing = true }
+    @State private var chosenThemeIndex: Int = 0
+    
+    func tap(on tapedThemeIndex: Int) -> some Gesture {
+        TapGesture().onEnded {
+            chosenThemeIndex = tapedThemeIndex
+            editing = true
+        }
+    }
+    
+    private var newThemeButton: some View {
+        Button("Add New Theme") {
+            chosenThemeIndex = 0
+            store.insertTheme(named: "", cardPairs: 2)
+            editing = true
+        }
     }
 }
 
