@@ -17,7 +17,6 @@ class EmojiMemoryGame: ObservableObject {
 //    private static let animals = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐒", "🦆", "🦅", "🦉"].shuffled()
 //    private static let flags = ["🇩🇪", "🇩🇿", "🇦🇷", "🇦🇺", "🇦🇹", "🇧🇭", "🇧🇪", "🇧🇷", "🇨🇦", "🇨🇿", "🇨🇱", "🇨🇳", "🇨🇴", "🇰🇷", "🇨🇷", "🇭🇷", "🇨🇺", "🇩🇰", "🇪🇨", "🇪🇬", "🇦🇪" ,"🇪🇸" ,"🇺🇸" ,"🇫🇮", "🇫🇷", "🇬🇷", "🇮🇳", "🇮🇷", "🇮🇪", "🇮🇱", "🇮🇹", "🇯🇲", "🇯🇵", "🇱🇧", "🇲🇾", "🇲🇽", "🇳🇬", "🇳🇴", "🇳🇿", "🇳🇱", "🇵🇹", "🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🇸🇬", "🇿🇦", "🇸🇪", "🇨🇭", "🇹🇭", "🇹🇳", "🇹🇷", "🇺🇦", "🇺🇾", "🇻🇪"]
     
-    
     private static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
         let gameEmojis = theme.emojisArray
         return MemoryGame(pairsOfCards: theme.cardPairs) { index in
@@ -38,8 +37,29 @@ class EmojiMemoryGame: ObservableObject {
     
     @Published private var model: MemoryGame<String>
     
+    var currentContent: [String] {
+        var currentContent = [String]()
+        for card in model.cards {
+            if !currentContent.contains(card.content) {
+                currentContent.append(card.content)
+            }
+        }
+        return currentContent
+    }
+    
     var cards: Array<Card> {
         return model.cards
+    }
+    
+    // MARK: - Dealing cards
+    
+    @Published private var dealt = Set<UUID>()
+    func deal(_ card: Card) {
+        dealt.insert(card.id)
+    }
+    
+    func isUndealt(_ card: Card) -> Bool {
+        !dealt.contains(card.id)
     }
     
     // MARK: - Intents
@@ -53,7 +73,10 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     func restart() {
-        model = EmojiMemoryGame.createMemoryGame(theme: theme)
+        dealt.removeAll()
+        model = MemoryGame(pairsOfCards: theme.cardPairs, createCardContent: { index in
+            currentContent[index]
+        })
     }
     
     // MARK: - Additional Methods

@@ -57,7 +57,7 @@ struct ThemeChooser: View {
     
     @State private var chosenThemeIndex: Int = 0
     
-    func tap(on tapedThemeIndex: Int) -> some Gesture {
+    private func tap(on tapedThemeIndex: Int) -> some Gesture {
         TapGesture().onEnded {
             chosenThemeIndex = tapedThemeIndex
             editing = true

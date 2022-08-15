@@ -34,7 +34,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
                     // and 2 points are given
-                    score += 2
+                    score += 2 + (cards[chosenIndex].hasEarnedBonus && cards[potentialMatchIndex].hasEarnedBonus ? 1 : 0)
                 }
                 // if one of the cards has been seen and not matched
                 if (cards[chosenIndex].hasBeenSeen || cards[potentialMatchIndex].hasBeenSeen) && (!cards[chosenIndex].isMatched || !cards[potentialMatchIndex].isMatched) {

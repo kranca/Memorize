@@ -23,16 +23,6 @@ struct EmojiMemoryGameView: View {
         }
     }
     
-    @State private var dealt = Set<UUID>()
-    
-    private func deal(_ card: EmojiMemoryGame.Card) {
-        dealt.insert(card.id)
-    }
-    
-    private func isUndealt(_ card: EmojiMemoryGame.Card) -> Bool {
-        !dealt.contains(card.id)
-    }
-    
     private func dealAnimation(for card: EmojiMemoryGame.Card) -> Animation {
         var delay = 0.0
         if let index = game.cards.firstIndex(where: { $0.id == card.id }) {
@@ -54,7 +44,7 @@ struct EmojiMemoryGameView: View {
 
             AspectRatioVGrid(items: game.cards, aspectRatio: 2/3, content: { card in
                 // this code is not a View, it's ViewBuilder syntax. For it to work we need @ViewBuilder in ARVG
-                if isUndealt(card) || card.isMatched && !card.isFaceUp {
+                if game.isUndealt(card) || card.isMatched && !card.isFaceUp {
                     Rectangle().opacity(0)
                 } else {
                     CardView(card: card)
@@ -81,7 +71,7 @@ struct EmojiMemoryGameView: View {
     var deckBody: some View {
         ZStack {
             // same as 'ForEach(game.cards.filter { isUndealt($0) }) { card in', since filter is a func
-            ForEach(game.cards.filter(isUndealt)) { card in
+            ForEach(game.cards.filter(game.isUndealt)) { card in
                 CardView(card: card)
                     .matchedGeometryEffect(id: card.id, in: dealingNamespace)
                     .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .identity))
@@ -93,7 +83,7 @@ struct EmojiMemoryGameView: View {
             // deal cards animation
             for card in game.cards {
                 withAnimation(dealAnimation(for: card)) {
-                    deal(card)
+                    game.deal(card)
                 }
             }
         }
@@ -116,8 +106,13 @@ struct EmojiMemoryGameView: View {
             Spacer()
             Button("Restart") {
                 withAnimation {
-                    dealt = []
                     game.restart()
+                    // deal cards animation
+                    for card in game.cards {
+                        withAnimation(dealAnimation(for: card)) {
+                            game.deal(card)
+                        }
+                    }
                 }
             }
             Spacer()
